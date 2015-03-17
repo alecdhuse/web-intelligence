@@ -1,5 +1,7 @@
 import ipaddr
 import json
+import socket
+import struct
 import time  
 import urllib2
 
@@ -34,4 +36,10 @@ def get_description():
 def get_refresh_rate():
     return 86400
 
-get_networks()
+def ip2long(ip):
+    """
+    Convert an IP string to long
+    """
+    packedIP = socket.inet_aton(ip)
+    return struct.unpack("!L", packedIP)[0]
+
