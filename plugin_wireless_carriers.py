@@ -23,7 +23,7 @@ def get_networks():
     return networks_list
 
 def get_description():
-    return 'Wireless Carrier Networks'
+    return 'Wireless Carrier Network'
 
 def get_refresh_rate():
     return 1000000
