@@ -77,6 +77,23 @@ def parse_object_info(info_string):
                             print "*\tUnkown Postal Code: " + token.strip()
                             print "**\t" + info_string
                     
+                elif obj_info.country == "CA":
+                    if token.strip() in postal_code_json_ca:
+                            obj_info.post_code = token.strip()
+                            obj_info.city = postal_code_json_ca[token.strip()]['city'].title().strip()
+                            found_postal_code = True
+                    else:
+                            print "*\tUnkown Postal Code: " + token.strip()
+                            print "**\t" + info_string
+                            
+                elif obj_info.country == "NZ":
+                    if token.strip() in postal_code_json_nz:
+                            obj_info.post_code = token.strip()
+                            obj_info.city = postal_code_json_nz[token.strip()]['city'].title().strip()
+                            found_postal_code = True
+                    else:
+                            print "*\tUnkown Postal Code: " + token.strip()
+                            print "**\t" + info_string                    
                 else:
                     print "*\tPostal code format for " + obj_info.country + " not known."
                     print "**\t" + info_string
@@ -85,6 +102,8 @@ def parse_object_info(info_string):
 
 country_codes = "https://raw.githubusercontent.com/alecdhuse/web-intelligence-data/master/country_codes.json"
 level2_divisions = "https://raw.githubusercontent.com/alecdhuse/web-intelligence-data/master/level-2-divisions.json"
+ca_postal_codes = "https://raw.githubusercontent.com/alecdhuse/web-intelligence-data/master/ca_postal_codes.json"
+nz_postal_codes = "https://raw.githubusercontent.com/alecdhuse/web-intelligence-data/master/nz_postal_codes.json"
 us_postal_codes = "https://raw.githubusercontent.com/alecdhuse/web-intelligence-data/master/us_postal_codes.json"
 source = "https://raw.githubusercontent.com/alecdhuse/web-intelligence-data/master/university_networks.json"
 nominatim = Nominatim()
@@ -97,9 +116,10 @@ country_codes_json = json.load(cc_data)
 lvl2_data = urllib2.urlopen(level2_divisions)
 level2_divisions_json = json.load(lvl2_data)
 
-# Load US postal codes
-pc_data = urllib2.urlopen(us_postal_codes)
-postal_code_json = json.load(pc_data)
+# Load postal codes
+postal_code_json_ca = json.load(urllib2.urlopen(ca_postal_codes))
+postal_code_json_nz = json.load(urllib2.urlopen(nz_postal_codes))
+postal_code_json = json.load(urllib2.urlopen(us_postal_codes))
 
 # Load source data
 data = urllib2.urlopen(source)
